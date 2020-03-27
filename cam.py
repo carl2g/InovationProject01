@@ -3,11 +3,6 @@ import boto3
 import os
 import uuid
 
-# pip3 install picamera
-# pip3 install requests
-# pip3 install boto3
-# pip3 install envbash
-
 S3_BUCKET_NAME = "inovation-project-01"
 S3_BASE_URL = "https://" + S3_BUCKET_NAME + ".s3.amazonaws.com/"
 LOCAL_IMG_DIR = os.path.abspath('.') + "/Images/"
@@ -78,6 +73,7 @@ def classify_in_folder(label, img_name):
 	    },
 	    Key=server_dir+img_name
 	)
+	return server_dir.split("/").first
 
 def main():
 	while True:
@@ -95,9 +91,13 @@ def main():
 				print("================")
 				print(label)
 				print("Classify in S3 folder ...")
-				classify_in_folder(label["Name"], img_name)
+				final_res = classify_in_folder(label["Name"], img_name)
+				print("Put the in the {} trash can", final_res)
 				print("Finished")
+			if not(resp['Labels']):
+				print("Sorry, we do not recognise the object. Pleas ask help to the emplyes for more information")
 			delete_obj(img_name)
+			os.remove(LOCAL_IMG_DIR + img_name)
 
 if __name__ == "__main__":
     main()
