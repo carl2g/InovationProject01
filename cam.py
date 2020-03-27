@@ -2,7 +2,6 @@ from picamera import PiCamera
 import boto3
 import os
 import uuid
-import json
 
 # pip3 install picamera
 # pip3 install requests
