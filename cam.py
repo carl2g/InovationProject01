@@ -73,7 +73,7 @@ def classify_in_folder(label, img_name):
 	    },
 	    Key=server_dir+img_name
 	)
-	return server_dir.split("/").first
+	return server_dir.split("/")[0]
 
 def main():
 	while True:
